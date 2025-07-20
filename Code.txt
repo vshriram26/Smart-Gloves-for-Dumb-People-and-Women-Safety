@@ -1,0 +1,73 @@
+#include <WiFi.h>
+#include <HTTPClient.h>
+
+// WiFi credentials
+const char* ssid = " ";
+const char* password = " ";
+
+// Telegram Bot credentials
+String botToken = " ";
+String chatId = " ";
+
+// Finger Pins
+const int indexPin = 13;
+const int middlePin = 12;
+const int ringPin = 14;
+const int littlePin = 27;
+
+
+// Message control
+bool lastState[4] = {false, false, false, false};
+String messages[4] = {
+  "Help me",
+  "I'm safe..!",
+  "medical emergency..!",
+  "feeling sad..!"
+};
+
+void sendTelegramMessage(String message) {
+  HTTPClient http;
+  String url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + message;
+  http.begin(url);
+  int httpResponseCode = http.GET();
+  http.end();
+}
+
+void setup() {
+  Serial.begin(115200);
+
+  // GPIO setup
+  pinMode(indexPin, INPUT);
+  pinMode(middlePin, INPUT);
+  pinMode(ringPin, INPUT);
+  pinMode(littlePin, INPUT);
+
+  // Connect to WiFi
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\nConnected to WiFi!");
+}
+
+void loop() {
+  bool currentStates[4] = {
+    digitalRead(indexPin),
+    digitalRead(middlePin),
+    digitalRead(ringPin),
+    digitalRead(littlePin)
+  };
+
+  for (int i = 0; i < 4; i++) {
+    if (currentStates[i] && !lastState[i]) {
+      Serial.println(messages[i]);
+      sendTelegramMessage(messages[i]);
+    }
+    lastState[i] = currentStates[i];
+  }
+
+  delay(100); // debounce delay
+}
+ change the id password and put telegram bot code
+

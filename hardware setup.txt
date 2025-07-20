@@ -1,0 +1,24 @@
+ Metal Rings
+	Type Used: Conductive metal rings or copper pads attached to glove fingers and thumb.
+	Function: When a finger touches the thumb, an electrical connection is created.
+	Detection Logic: ESP32 pins are configured as INPUT_PULLUP. A touch causes the pin to read LOW.
+ ESP32 Microcontroller
+	Role: Core controller handling gesture detection and message transmission.
+	Advantages:
+	Built-in Wi-Fi
+	Multiple GPIOs
+	Compact size
+	Compatible with Arduino IDE
+	Wiring:
+	Each finger ring → individual GPIO (e.g., D2, D4, D5, D18, D19)
+	Thumb ring → GND
+ LED Indicator
+	Purpose: Blinks when a valid touch is detected and a message is being sent.
+	Wiring:
+	Positive (anode) → GPIO pin (e.g., D21)
+	Negative (cathode) → GND
+	Function: Gives visual confirmation for successful gesture recognition
+Telegram bot 
+Power supply 
+
+

@@ -1,0 +1,6 @@
+Programming Environment
+	IDE: Arduino IDE
+	Board: ESP32 Dev Module
+	Libraries Used:
+	WiFi.h – for connecting to Wi-Fi
+	HTTPClient.h – for sending HTTP requests to Telegram API
